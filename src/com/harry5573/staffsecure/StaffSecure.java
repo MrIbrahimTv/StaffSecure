@@ -20,6 +20,7 @@ public class StaffSecure extends JavaPlugin {
     
     //Is not logged in Array
     ArrayList<Player> isnotloggedin = new ArrayList<Player>();
+    ArrayList<String> isloggedin = new ArrayList<String>();
     
     //Classes
     public StaffSecureEventListener slistener;
@@ -44,6 +45,9 @@ public class StaffSecure extends JavaPlugin {
 
             //Convert the null prefix now that we have loaded the config
             prefix = this.getConfig().getString("prefix").replaceAll("(&([a-f0-9]))", "\u00A7$2");
+            
+            this.isloggedin.clear();
+            this.isnotloggedin.clear();
             
             //Commands
             this.getCommand("login").setExecutor(new StaffSecureCommandListener(this));

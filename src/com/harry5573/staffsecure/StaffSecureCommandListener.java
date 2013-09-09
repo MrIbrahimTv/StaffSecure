@@ -41,6 +41,12 @@ public class StaffSecureCommandListener implements CommandExecutor {
                 player.sendMessage(plugin.getPrefix() + ChatColor.AQUA + " You do not need to loggin silly!");
                 return true;
             }
+  
+            if (!plugin.isnotloggedin.contains(player)) {
+                player.sendMessage(plugin.getPrefix() + ChatColor.GOLD + " You are already logged in!");
+                return true;
+            }
+
 
             if (!plugin.getConfig().contains(player.getName())) {
                 player.sendMessage(plugin.getPrefix() + ChatColor.RED + " You do not have a password set and you need one. Do /password <pass>");
@@ -62,6 +68,7 @@ public class StaffSecureCommandListener implements CommandExecutor {
                 }
 
                 player.sendMessage(plugin.getPrefix() + ChatColor.GREEN + " Logged in!");
+                plugin.isloggedin.add(player.getName());
                 plugin.isnotloggedin.remove(player);
                 return true;
             }
@@ -70,6 +77,11 @@ public class StaffSecureCommandListener implements CommandExecutor {
             if (command.getName().equalsIgnoreCase("password")) {
                 if (!player.hasPermission("staffsecure.staff")) {
                     player.sendMessage(plugin.getPrefix() + ChatColor.AQUA + " You do not need to set a password silly!");
+                    return true;
+                }
+                
+                if (!plugin.isnotloggedin.contains(player)) {
+                    player.sendMessage(plugin.getPrefix() + ChatColor.GOLD + " You are already logged in!");
                     return true;
                 }
 

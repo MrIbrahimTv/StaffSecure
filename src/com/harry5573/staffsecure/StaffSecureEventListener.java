@@ -47,8 +47,13 @@ public class StaffSecureEventListener implements Listener {
             return;
         }
         
-        plugin.isnotloggedin.add(player);
+        if (plugin.isloggedin.contains(player.getName())) {
+            System.out.println("Player allready logged in");
+            return;
+        }
         
+         plugin.isnotloggedin.add(player);
+
         if (!plugin.getConfig().contains(player.getName())) {
             player.sendMessage(plugin.getPrefix() + ChatColor.RED + " You do not have a password set and you need one. Do /password <pass>");
             return;
