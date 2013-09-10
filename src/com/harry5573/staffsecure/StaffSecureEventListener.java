@@ -47,8 +47,10 @@ public class StaffSecureEventListener implements Listener {
             return;
         }
         
-        if (plugin.isloggedin.contains(player.getName())) {
-            System.out.println("Player allready logged in");
+        Boolean isCheckOn = plugin.getConfig().getBoolean("relogcheck");
+        
+        
+        if (plugin.isloggedin.contains(player.getName()) && (isCheckOn == false)) {
             return;
         }
         

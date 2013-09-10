@@ -52,6 +52,7 @@ public class StaffSecure extends JavaPlugin {
             //Commands
             this.getCommand("login").setExecutor(new StaffSecureCommandListener(this));
             this.getCommand("password").setExecutor(new StaffSecureCommandListener(this));
+            this.getCommand("staffsecure").setExecutor(new StaffSecureCommandListener(this));
 
             System.out.println("=================================");
         } catch (Exception ex) {

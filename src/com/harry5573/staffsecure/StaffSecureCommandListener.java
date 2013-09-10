@@ -73,6 +73,30 @@ public class StaffSecureCommandListener implements CommandExecutor {
                 return true;
             }
         }
+        
+        if (command.getName().equalsIgnoreCase("staffsecure")) {
+            
+            if (!player.hasPermission("staffsecure.admin")) {
+                player.sendMessage(plugin.getPrefix() + ChatColor.AQUA + " You do not have permission to use staffsecure commands.");
+                return true;
+            }
+            
+            if (args.length != 1) {
+                player.sendMessage(plugin.getPrefix() + ChatColor.RED + " Usage: /staffsecure <reload>");
+                return true;
+            }
+            
+            if (args.length == 1) {
+                if (args[0].contains("reload")) {
+                    plugin.reloadConfig();
+                    player.sendMessage(plugin.getPrefix() + ChatColor.GOLD + " Plugins config reloaded!");
+                    return true;
+                } else {
+                    player.sendMessage(plugin.getPrefix() + ChatColor.RED + " Usage: /staffsecure <reload>");
+                    return true;
+                }
+            }
+        }
 
             if (command.getName().equalsIgnoreCase("password")) {
                 if (!player.hasPermission("staffsecure.staff")) {

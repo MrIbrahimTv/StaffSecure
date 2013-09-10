@@ -1,3 +1,7 @@
 # StaffSecure Config By Harry5573
+# Prefix == Plugins Prefix Before Messages
+# Motdenable == Should the plugin send a message on every login to the player saying "Server running staff secure by harry5573"
+# RelogCheck == Should players have to relogin every relog?
 prefix: '&f[&cStaffSecure&f]'
 motdenable: true
+relogcheck: false

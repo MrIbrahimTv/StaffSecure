@@ -9,3 +9,5 @@ commands:
     description: Login command for staff
   password:
     description: Set password command for staff
+  staffsecure:
+    description: Main plugin command
