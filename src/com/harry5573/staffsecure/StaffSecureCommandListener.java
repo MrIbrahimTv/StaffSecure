@@ -42,13 +42,13 @@ public class StaffSecureCommandListener implements CommandExecutor {
                 return true;
             }
   
-            if (!plugin.isnotloggedin.contains(player)) {
+            if (!plugin.isNotLoggedIn.contains(player.getName())) {
                 player.sendMessage(plugin.getPrefix() + ChatColor.GOLD + " You are already logged in!");
                 return true;
             }
 
 
-            if (!plugin.getConfig().contains(player.getName())) {
+            if (!plugin.getUserFile(player).contains("password")) {
                 player.sendMessage(plugin.getPrefix() + ChatColor.RED + " You do not have a password set and you need one. Do /password <pass>");
                 return true;
             }
@@ -59,18 +59,8 @@ public class StaffSecureCommandListener implements CommandExecutor {
             }
 
             if (args.length == 1) {
-
-                String password = (String) plugin.getConfig().get(player.getName());
-
-                if (!args[0].equalsIgnoreCase(password)) {
-                    player.kickPlayer(ChatColor.RED + "Incorrect password");
-                    return true;
-                }
-
-                player.sendMessage(plugin.getPrefix() + ChatColor.GREEN + " Logged in!");
-                plugin.isloggedin.add(player.getName());
-                plugin.isnotloggedin.remove(player);
-                return true;
+                String attemptpass = args[0];
+                plugin.attemptLogin(player, attemptpass);
             }
         }
         
@@ -104,12 +94,12 @@ public class StaffSecureCommandListener implements CommandExecutor {
                     return true;
                 }
                 
-                if (!plugin.isnotloggedin.contains(player)) {
+                if (!plugin.isNotLoggedIn.contains(player.getName())) {
                     player.sendMessage(plugin.getPrefix() + ChatColor.GOLD + " You are already logged in!");
                     return true;
                 }
 
-                if (plugin.getConfig().contains(player.getName())) {
+                if (plugin.getUserFile(player).contains("password")) {
                     player.sendMessage(plugin.getPrefix() + ChatColor.RED + " You already have a password set! If you have lost it contact an admin");
                     return true;
                 }
@@ -120,9 +110,7 @@ public class StaffSecureCommandListener implements CommandExecutor {
                 }
 
                 if (args.length == 1) {
-                    player.sendMessage(plugin.getPrefix() + ChatColor.AQUA + " Password set! You must now /login");
-                    plugin.getConfig().set(player.getName(), args[0]);
-                    plugin.saveConfig();
+                    plugin.setPassword(player, args[0]);
                     return true;
                 }
             }

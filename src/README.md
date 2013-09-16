@@ -40,3 +40,5 @@ SOURCE CODE: https://github.com/Harry5573OP/StaffSecure
 UPCOMING:
 - MySQL Storage
 - Better Way Of Storing Passwords
+
+Donate To My Developer Fund: Here

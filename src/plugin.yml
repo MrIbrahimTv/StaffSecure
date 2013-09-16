@@ -11,3 +11,5 @@ commands:
     description: Set password command for staff
   staffsecure:
     description: Main plugin command
+  resetpassword:
+    description: Console command to reset passwords

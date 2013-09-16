@@ -36,6 +36,8 @@ public class StaffSecureEventListener implements Listener {
     public void onSecureJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
         
+        plugin.fileCheckPlayer(player);
+        
         Boolean isMotdOn = plugin.getConfig().getBoolean("motdenable");
         
         if (isMotdOn) {
@@ -49,12 +51,13 @@ public class StaffSecureEventListener implements Listener {
         
         Boolean isCheckOn = plugin.getConfig().getBoolean("relogcheck");
         
-        
-        if (plugin.isloggedin.contains(player.getName()) && (isCheckOn == false)) {
+        //Dont addthem if there allready in and checks off
+        if (plugin.isLoggedIn.contains(player.getName()) && (isCheckOn == false)) {
             return;
         }
         
-         plugin.isnotloggedin.add(player);
+        //Add them
+        plugin.isNotLoggedIn.add(player.getName());
 
         if (!plugin.getConfig().contains(player.getName())) {
             player.sendMessage(plugin.getPrefix() + ChatColor.RED + " You do not have a password set and you need one. Do /password <pass>");
@@ -67,7 +70,7 @@ public class StaffSecureEventListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onSecureMove(PlayerMoveEvent e) {
         Player p = e.getPlayer();
-        if (plugin.isnotloggedin.contains(p)) {
+        if (plugin.isNotLoggedIn.contains(p.getName())) {
             if ((e.getFrom().getBlockX() != e.getTo().getBlockX()) || (e.getFrom().getBlockZ() != e.getTo().getBlockZ())) {
                 p.teleport(e.getFrom());
                 p.sendMessage(plugin.getPrefix() + ChatColor.RED + " You need to login! /login <password>");
@@ -78,7 +81,7 @@ public class StaffSecureEventListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onSecureDropItem(PlayerDropItemEvent e) {
         Player p = e.getPlayer();
-        if (plugin.isnotloggedin.contains(p)) {
+        if (plugin.isNotLoggedIn.contains(p.getName())) {
             e.setCancelled(true);
             p.sendMessage(plugin.getPrefix() + ChatColor.RED + " You need to login! /login <password>");
         }
@@ -87,7 +90,7 @@ public class StaffSecureEventListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onSecureBreak(BlockBreakEvent e) {
         Player p = e.getPlayer();
-        if (plugin.isnotloggedin.contains(p)) {
+        if (plugin.isNotLoggedIn.contains(p.getName())) {
             e.setCancelled(true);
             p.sendMessage(plugin.getPrefix() + ChatColor.RED + " You need to login! /login <password>");
         }
@@ -96,7 +99,7 @@ public class StaffSecureEventListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onSecurePlace(BlockPlaceEvent e) {
         Player p = e.getPlayer();
-        if (plugin.isnotloggedin.contains(p)) {
+        if (plugin.isNotLoggedIn.contains(p.getName())) {
             e.setCancelled(true);
             p.sendMessage(plugin.getPrefix() + ChatColor.RED + " You need to login! /login <password>");
         }
@@ -110,7 +113,7 @@ public class StaffSecureEventListener implements Listener {
             return;
         }
         
-        if (plugin.isnotloggedin.contains(p)) {
+        if (plugin.isNotLoggedIn.contains(p.getName())) {
             e.setCancelled(true);
             p.sendMessage(plugin.getPrefix() + ChatColor.RED + " You need to login! /login <password>");
         }
@@ -119,7 +122,7 @@ public class StaffSecureEventListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onSecureChat(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
-        if (plugin.isnotloggedin.contains(p)) {
+        if (plugin.isNotLoggedIn.contains(p.getName())) {
             e.setCancelled(true);
             p.sendMessage(plugin.getPrefix() + ChatColor.RED + " You need to login! /login <password>");
         }
