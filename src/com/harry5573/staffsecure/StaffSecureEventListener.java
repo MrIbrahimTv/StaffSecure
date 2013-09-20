@@ -36,8 +36,6 @@ public class StaffSecureEventListener implements Listener {
     public void onSecureJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
         
-        plugin.fileCheckPlayer(player);
-        
         Boolean isMotdOn = plugin.getConfig().getBoolean("motdenable");
         
         if (isMotdOn) {
@@ -48,6 +46,8 @@ public class StaffSecureEventListener implements Listener {
         if (!player.hasPermission("staffsecure.staff")) {
             return;
         }
+        
+        plugin.fileCheckPlayer(player);
         
         Boolean isCheckOn = plugin.getConfig().getBoolean("relogcheck");
         
