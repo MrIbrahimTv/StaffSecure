@@ -59,7 +59,7 @@ public class StaffSecureEventListener implements Listener {
         //Add them
         plugin.isNotLoggedIn.add(player.getName());
 
-        if (!plugin.getConfig().contains(player.getName())) {
+        if (!plugin.getUserFile(player).contains("password")) {
             player.sendMessage(plugin.getPrefix() + ChatColor.RED + " You do not have a password set and you need one. Do /password <pass>");
             return;
         }
