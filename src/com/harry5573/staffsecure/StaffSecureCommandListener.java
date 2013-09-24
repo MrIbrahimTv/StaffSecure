@@ -4,8 +4,6 @@
  */
 package com.harry5573.staffsecure;
 
-import static com.harry5573.staffsecure.StaffSecureEventListener.plugin;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -38,7 +36,7 @@ public class StaffSecureCommandListener implements CommandExecutor {
 
         if (command.getName().equalsIgnoreCase("login")) {
             if (!player.hasPermission("staffsecure.staff")) {
-                player.sendMessage(plugin.getPrefix() + ChatColor.AQUA + " You do not need to loggin silly!");
+                player.sendMessage(plugin.getPrefix() + ChatColor.AQUA + " You do not need to login.");
                 return true;
             }
   

@@ -78,7 +78,7 @@ public class StaffSecureEventListener implements Listener {
         }
     }
     
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onSecureDropItem(PlayerDropItemEvent e) {
         Player p = e.getPlayer();
         if (plugin.isNotLoggedIn.contains(p.getName())) {
@@ -87,7 +87,7 @@ public class StaffSecureEventListener implements Listener {
         }
     }
     
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onSecureBreak(BlockBreakEvent e) {
         Player p = e.getPlayer();
         if (plugin.isNotLoggedIn.contains(p.getName())) {
@@ -96,7 +96,7 @@ public class StaffSecureEventListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onSecurePlace(BlockPlaceEvent e) {
         Player p = e.getPlayer();
         if (plugin.isNotLoggedIn.contains(p.getName())) {
@@ -105,7 +105,7 @@ public class StaffSecureEventListener implements Listener {
         }
     }
     
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onSecureCommand(PlayerCommandPreprocessEvent e) {
         Player p = e.getPlayer();
         
@@ -119,7 +119,7 @@ public class StaffSecureEventListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onSecureChat(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
         if (plugin.isNotLoggedIn.contains(p.getName())) {

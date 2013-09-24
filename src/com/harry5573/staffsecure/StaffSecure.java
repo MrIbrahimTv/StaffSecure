@@ -7,6 +7,7 @@ package com.harry5573.staffsecure;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -22,8 +23,8 @@ public class StaffSecure extends JavaPlugin {
 
     public static StaffSecure plugin;
     //Is not logged in Array
-    public ArrayList<String> isNotLoggedIn = new ArrayList<String>();
-    public ArrayList<String> isLoggedIn = new ArrayList<String>();
+    public List<String> isNotLoggedIn = new ArrayList<String>();
+    public List<String> isLoggedIn = new ArrayList<String>();
     //Classes
     public StaffSecureEventListener slistener;
     public StaffSecureCommandListener sexecutor;
@@ -48,6 +49,7 @@ public class StaffSecure extends JavaPlugin {
             this.sexecutor = new StaffSecureCommandListener(this);
 
             Bukkit.getServer().getPluginManager().registerEvents(new StaffSecureEventListener(this), this);
+            Bukkit.getServer().getPluginManager().registerEvents(new CommandChecks(this), this);
 
             //Convert the null prefix now that we have loaded the config
             prefix = this.getConfig().getString("prefix").replaceAll("(&([a-f0-9]))", "\u00A7$2");
