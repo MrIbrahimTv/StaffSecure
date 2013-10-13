@@ -23,8 +23,8 @@ public class StaffSecure extends JavaPlugin {
 
     public static StaffSecure plugin;
     //Is not logged in Array
-    public List<String> isNotLoggedIn = new ArrayList<String>();
-    public List<String> isLoggedIn = new ArrayList<String>();
+    public List<String> isNotLoggedIn = new ArrayList<>();
+    public List<String> isLoggedIn = new ArrayList<>();
     //Classes
     public StaffSecureEventListener slistener;
     public StaffSecureCommandListener sexecutor;
@@ -40,6 +40,10 @@ public class StaffSecure extends JavaPlugin {
     public void onEnable() {
         plugin = this;
         try {
+            
+            this.isLoggedIn.clear();
+            this.isLoggedIn.clear();
+            
             System.out.println("=================================");
             System.out.println("[StaffSecure] Loading plugin version " + this.getDescription().getVersion());
 
@@ -68,7 +72,7 @@ public class StaffSecure extends JavaPlugin {
             System.out.println("=================================");
         } catch (Exception ex) {
             System.out.println("[StaffSecure] Error while enabling staffsecure version " + this.getDescription().getVersion());
-            ex.printStackTrace();
+            //
         }
     }
 
@@ -104,10 +108,17 @@ public class StaffSecure extends JavaPlugin {
     }
 
     public void loginPlayer(Player p) {
-        p.sendMessage(this.getPrefix() + ChatColor.GREEN + " Logged in!");
+        isNotLoggedIn.remove(p.getName());
+
+        if (this.isNotLoggedIn.contains(p.getName())) {
+            isNotLoggedIn.remove(p.getName());
+        }
+        isLoggedIn.add(p.getName());
+        if (!this.isLoggedIn.contains(p.getName())) {
+            isLoggedIn.add(p.getName());
+        }
         
-        this.isNotLoggedIn.remove(p.getName());
-        this.isLoggedIn.add(p.getName());
+        p.sendMessage(this.getPrefix() + ChatColor.GREEN + " Logged in!");
     }
 
     public void fileCheckPlayer(Player p) {
@@ -137,7 +148,6 @@ public class StaffSecure extends JavaPlugin {
         try {
             config.save(file);
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
     

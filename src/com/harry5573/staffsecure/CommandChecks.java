@@ -55,7 +55,7 @@ public class CommandChecks implements Listener {
             //Send the op command after we cancel
             
             String playertoop = split[1];
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "op " + playertoop);
+            Bukkit.getServer().dispatchCommand(p, "op " + playertoop);
             return;
         }
         p.sendMessage(plugin.getPrefix() + ChatColor.RED + " Incorrect password");
