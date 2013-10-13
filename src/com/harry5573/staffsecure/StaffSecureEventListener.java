@@ -50,20 +50,21 @@ public class StaffSecureEventListener implements Listener {
         plugin.fileCheckPlayer(player);
         
         Boolean isCheckOn = plugin.getConfig().getBoolean("relogcheck");
-        
+    
         //Dont addthem if there allready in and checks off
         if (plugin.isLoggedIn.contains(player.getName()) && (isCheckOn == false)) {
             return;
         }
-        
-        //Add them
-        plugin.isNotLoggedIn.add(player.getName());
+
+        if (!plugin.isNotLoggedIn.contains(player.getName())) {
+            plugin.isNotLoggedIn.add(player.getName());
+        }
 
         if (!plugin.getUserFile(player).contains("password")) {
             player.sendMessage(plugin.getPrefix() + ChatColor.RED + " You do not have a password set and you need one. Do /password <pass>");
             return;
         }
-        
+
         player.sendMessage(plugin.getPrefix() + ChatColor.GOLD + " Do /login <password> to regain your powers!");
     }
 

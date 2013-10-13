@@ -58,6 +58,8 @@ public class StaffSecureResetCommand implements CommandExecutor {
                 usersfile.delete();
                 
                 resetplayer.kickPlayer(ChatColor.GOLD + "Your password has been reset");
+                plugin.isLoggedIn.remove(resetplayer.getName());
+                plugin.isNotLoggedIn.remove(resetplayer.getName());
                 System.out.println("[StaffSecure] You reset the password for " + playername + " !");
             }
         }
