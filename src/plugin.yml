@@ -1,9 +1,9 @@
 name: StaffSecure
 description: Give your players the option to have to register
-version: 1.0-A
-website: www.harry5573.co.uk
+version: 2.0
+website: www.arkhamnetwork.org
 author: Harry5573
-main: com.harry5573.staffsecure.StaffSecure
+main: org.arkhamnetwork.staffsecure.StaffSecure
 commands:
   login:
     description: Login command for staff

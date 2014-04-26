@@ -1,11 +1,25 @@
-# StaffSecure Config By Harry5573
-# Prefix == Plugins Prefix Before Messages
-# Motdenable == Should the plugin send a message on every login to the player saying "Server running staff secure by harry5573"
-# RelogCheck == Should players have to relogin every relog?
-# Command checks == Should we add passwords to command such as ops?
-# PasswordOP == The password needed when typing /op <player> <password>
-prefix: '&f[&cStaffSecure&f]'
-motdenable: true
-relogcheck: false
-commandchecks: true
-passwordop: oppass
+################################################
+#                StaffSecure                   #
+#                                              #
+#                Developed by                  #
+#                 harry5573                    #
+#                                              #
+#                                              #
+#        http://www.arkhamnetwork.org          #
+#                 arkhamnetwork.org            #
+################################################
+
+# Configure your messages.
+messages:
+    prefix: '&f[&cStaffSecure&f]'
+
+# Should we send the player a StaffSecure motd on login?
+motdenable: false
+
+# When should a player with the permission have to login?
+forcelogin:
+    # Whenever a player relog's in with a different IP than they had logged in with before.
+    # Will not work with reverse proxys where everyones IP is the same.
+    relogipchange: true
+    # Whenever a player relog's in even if their ip has not changed.
+    relog: false
