@@ -24,11 +24,14 @@ public class StaffSecureUserConfig {
     private String playerIP;
     @Getter
     private String encryptedPassword;
+    @Getter
+    private boolean loggedIntoLastLoggedIp;
 
     public StaffSecureUserConfig(FileConfiguration config, File playerConfigFile) {
         this.configFile = config;
         this.playerIP = config.getString("lastloggedip");
         this.encryptedPassword = config.getString("password");
+        this.loggedIntoLastLoggedIp = config.getBoolean("loggedintolastloggedip");
         this.playerConfigFile = playerConfigFile;
     }
 
@@ -44,6 +47,15 @@ public class StaffSecureUserConfig {
     public void setPassword(String encryptedPassword) {
         this.encryptedPassword = encryptedPassword;
         configFile.set("password", encryptedPassword);
+        try {
+            configFile.save(playerConfigFile);
+        } catch (IOException ex) {
+        }
+    }
+
+    public void setLoggedInToLastIP(boolean value) {
+        this.loggedIntoLastLoggedIp = value;
+        configFile.set("loggedintolastloggedip", value);
         try {
             configFile.save(playerConfigFile);
         } catch (IOException ex) {

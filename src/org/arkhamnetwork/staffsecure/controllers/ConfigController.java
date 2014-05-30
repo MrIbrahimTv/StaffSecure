@@ -7,10 +7,12 @@ package org.arkhamnetwork.staffsecure.controllers;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
 import org.arkhamnetwork.staffsecure.StaffSecure;
 import org.arkhamnetwork.staffsecure.struct.Config;
 import org.arkhamnetwork.staffsecure.utils.MessageUtils;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 /**
  *
@@ -42,6 +44,10 @@ public class ConfigController {
     public static void createUserFile(String userUUID) {
         try {
             getUserFile(userUUID).createNewFile();
+            FileConfiguration userConfig = YamlConfiguration.loadConfiguration(getUserFile(userUUID));
+            
+            userConfig.set("lastloggedip", InetAddress.getByName("0.0.0.0"));
+            userConfig.set("loggedintolastloggedip", Boolean.FALSE);
         } catch (IOException ex) {
         }
     }

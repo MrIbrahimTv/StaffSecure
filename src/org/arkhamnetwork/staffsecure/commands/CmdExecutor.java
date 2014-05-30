@@ -65,6 +65,7 @@ public class CmdExecutor implements CommandExecutor {
                 }
                 player.sendMessage(plugin.configuration.getMessagePrefix() + ChatColor.GREEN + " Logged in!");
                 plugin.users.get(player.getUniqueId().toString()).setLoggedIn(true);
+                plugin.users.get(player.getUniqueId().toString()).getConfig().setLoggedInToLastIP(true);
                 return true;
             }
         }

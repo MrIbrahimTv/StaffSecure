@@ -38,38 +38,38 @@ public class PlayerController {
         }
 
         String previousIp = plugin.users.get(player.getUniqueId().toString()).getConfig().getPlayerIP();
-        
         if (previousIp == null) {
             previousIp = "0.0.0.0";
         }
         
-        plugin.users.get(player.getUniqueId().toString()).getConfig().setIP(player.getAddress().toString().split(":")[0].replace("/", ""));
-
-        boolean hasIpChanged = !player.getAddress().toString().split(":")[0].replace("/", "").equals(previousIp);
-
         if (plugin.users.get(player.getUniqueId().toString()).getConfig().getEncryptedPassword() == null) {
             player.sendMessage(plugin.configuration.getMessagePrefix() + ChatColor.RED + " You do not have a password set and you need one. Do /password <pass>");
         }
 
+        plugin.users.get(player.getUniqueId().toString()).getConfig().setIP(player.getAddress().toString().split(":")[0].replace("/", ""));
+        
+        if (!plugin.configuration.isForceLoginOnRelog() && !plugin.configuration.isForceLoginOnRelogIfIpChange()) {
+            return;
+        }
+
+        boolean hasIpChanged = !player.getAddress().toString().split(":")[0].replace("/", "").equals(previousIp);
         if (hasIpChanged) {
-            player.sendMessage(plugin.configuration.getMessagePrefix() + ChatColor.YELLOW + " Your IP has changed since the last time you logged in.");
+            player.sendMessage(plugin.configuration.getMessagePrefix() + ChatColor.YELLOW + " Your IP has changed since the last time you logged in. We have logged you out.");
+            plugin.users.get(player.getUniqueId().toString()).getConfig().setLoggedInToLastIP(false);
         }
 
-        if (plugin.configuration.isForceLoginOnRelogIfIpChange() && (hasIpChanged)) {
+        if (!hasIpChanged && !plugin.configuration.isForceLoginOnRelog() && plugin.configuration.isForceLoginOnRelogIfIpChange() && plugin.users.get(player.getUniqueId().toString()).getConfig().isLoggedIntoLastLoggedIp()) {
+            plugin.users.get(player.getUniqueId().toString()).setLoggedIn(true);
+            return;
+        }
+        
+        if (plugin.configuration.isForceLoginOnRelog() || (plugin.configuration.isForceLoginOnRelogIfIpChange() && hasIpChanged)) {
             plugin.users.get(player.getUniqueId().toString()).setLoggedIn(false);
             if (plugin.users.get(player.getUniqueId().toString()).getConfig().getEncryptedPassword() != null) {
                 player.sendMessage(plugin.configuration.getMessagePrefix() + ChatColor.RED + " You need to login! /login <password>");
             }
-            return;
         }
-
-        if (plugin.configuration.isForceLoginOnRelog()) {
-            plugin.users.get(player.getUniqueId().toString()).setLoggedIn(false);
-            if (plugin.users.get(player.getUniqueId().toString()).getConfig().getEncryptedPassword() != null) {
-                player.sendMessage(plugin.configuration.getMessagePrefix() + ChatColor.RED + " You need to login! /login <password>");
-            }
-            return;
-        }
+        return;
     }
 
     private static StaffSecureUser getUser(Player player) {
