@@ -20,13 +20,13 @@ public class PlayerController {
 
     private static final StaffSecure plugin = StaffSecure.get();
 
-    public static void handleLogin(Player player) {
+    public static StaffSecureUser handleLogin(Player player) {
         if (plugin.configuration.isMotdEnabled()) {
             player.sendMessage(plugin.configuration.getMessagePrefix() + ChatColor.GOLD + " This server is running staffsecure by harry5573!");
         }
 
         if (!player.hasPermission("staffsecure.staff")) {
-            return;
+            return null;
         }
 
         if (!ConfigController.getUserFile(player.getUniqueId().toString()).exists()) {
@@ -49,7 +49,7 @@ public class PlayerController {
         plugin.users.get(player.getUniqueId().toString()).getConfig().setIP(player.getAddress().toString().split(":")[0].replace("/", ""));
         
         if (!plugin.configuration.isForceLoginOnRelog() && !plugin.configuration.isForceLoginOnRelogIfIpChange()) {
-            return;
+            return null;
         }
 
         boolean hasIpChanged = !player.getAddress().toString().split(":")[0].replace("/", "").equals(previousIp);
@@ -60,7 +60,7 @@ public class PlayerController {
 
         if (!hasIpChanged && !plugin.configuration.isForceLoginOnRelog() && plugin.configuration.isForceLoginOnRelogIfIpChange() && plugin.users.get(player.getUniqueId().toString()).getConfig().isLoggedIntoLastLoggedIp()) {
             plugin.users.get(player.getUniqueId().toString()).setLoggedIn(true);
-            return;
+            return null;
         }
         
         if (plugin.configuration.isForceLoginOnRelog() || (plugin.configuration.isForceLoginOnRelogIfIpChange() && hasIpChanged)) {
@@ -69,7 +69,7 @@ public class PlayerController {
                 player.sendMessage(plugin.configuration.getMessagePrefix() + ChatColor.RED + " You need to login! /login <password>");
             }
         }
-        return;
+        return plugin.users.get(player.getUniqueId().toString());
     }
 
     private static StaffSecureUser getUser(Player player) {

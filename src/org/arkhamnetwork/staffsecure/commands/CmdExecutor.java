@@ -7,6 +7,7 @@ package org.arkhamnetwork.staffsecure.commands;
 
 import org.arkhamnetwork.staffsecure.StaffSecure;
 import org.arkhamnetwork.staffsecure.controllers.ConfigController;
+import org.arkhamnetwork.staffsecure.controllers.PlayerController;
 import org.arkhamnetwork.staffsecure.struct.StaffSecureUser;
 import org.arkhamnetwork.staffsecure.utils.EncryptionUtils;
 import org.bukkit.Bukkit;
@@ -36,12 +37,22 @@ public class CmdExecutor implements CommandExecutor {
             
             Player player = (Player) sender;
             
+            if (player == null) {
+                return true;
+            }
+            
             if (!player.hasPermission("staffsecure.staff")) {
                 player.sendMessage(plugin.configuration.getMessagePrefix() + ChatColor.AQUA + " You do not need to login.");
                 return true;
             }
             
             StaffSecureUser user = plugin.users.get(player.getUniqueId().toString());
+            
+            //Well they have perms now...
+            if (user == null) {
+                PlayerController.handleLogin(player);
+                return true;
+            }
             
             if (user.isLoggedIn()) {
                 player.sendMessage(plugin.configuration.getMessagePrefix() + ChatColor.GOLD + " You are already logged in!");

@@ -25,7 +25,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
  * @author Harry5573
  */
 public class PlayerListener implements Listener {
-    
+
     private final StaffSecure plugin = StaffSecure.get();
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -39,7 +39,16 @@ public class PlayerListener implements Listener {
             return;
         }
 
-        StaffSecureUser user = plugin.users.get(e.getPlayer().getUniqueId().toString());
+        Player player = e.getPlayer();
+        if (!player.hasPermission("staffsecure.staff")) {
+            return;
+        }
+
+        StaffSecureUser user = plugin.users.get(player.getUniqueId().toString());
+        //Well they have perms now...
+        if (user == null) {
+            user = PlayerController.handleLogin(player);
+        }
 
         if (user == null || user.isLoggedIn()) {
             return;
@@ -51,7 +60,16 @@ public class PlayerListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onSecureDropItem(PlayerDropItemEvent e) {
-        StaffSecureUser user = plugin.users.get(e.getPlayer().getUniqueId().toString());
+        Player player = e.getPlayer();
+        if (!player.hasPermission("staffsecure.staff")) {
+            return;
+        }
+
+        StaffSecureUser user = plugin.users.get(player.getUniqueId().toString());
+        //Well they have perms now...
+        if (user == null) {
+            user = PlayerController.handleLogin(player);
+        }
 
         if (user == null || user.isLoggedIn()) {
             return;
@@ -63,7 +81,16 @@ public class PlayerListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onSecureBreak(BlockBreakEvent e) {
-        StaffSecureUser user = plugin.users.get(e.getPlayer().getUniqueId().toString());
+        Player player = e.getPlayer();
+        if (!player.hasPermission("staffsecure.staff")) {
+            return;
+        }
+
+        StaffSecureUser user = plugin.users.get(player.getUniqueId().toString());
+        //Well they have perms now...
+        if (user == null) {
+            user = PlayerController.handleLogin(player);
+        }
 
         if (user == null || user.isLoggedIn()) {
             return;
@@ -75,7 +102,16 @@ public class PlayerListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onSecurePlace(BlockPlaceEvent e) {
-        StaffSecureUser user = plugin.users.get(e.getPlayer().getUniqueId().toString());
+        Player player = e.getPlayer();
+        if (!player.hasPermission("staffsecure.staff")) {
+            return;
+        }
+
+        StaffSecureUser user = plugin.users.get(player.getUniqueId().toString());
+        //Well they have perms now...
+        if (user == null) {
+            user = PlayerController.handleLogin(player);
+        }
 
         if (user == null || user.isLoggedIn()) {
             return;
@@ -87,13 +123,20 @@ public class PlayerListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onSecureCommand(PlayerCommandPreprocessEvent e) {
-        Player p = e.getPlayer();
-
         if ((e.getMessage() == null || e.getMessage().split(" ")[0].toLowerCase().equals("/login") || e.getMessage().split(" ")[0].toLowerCase().equals("/password") || e.getMessage().split(" ")[0].toLowerCase().equals("/staffsecure"))) {
             return;
         }
 
-        StaffSecureUser user = plugin.users.get(e.getPlayer().getUniqueId().toString());
+        Player player = e.getPlayer();
+        if (!player.hasPermission("staffsecure.staff")) {
+            return;
+        }
+
+        StaffSecureUser user = plugin.users.get(player.getUniqueId().toString());
+        //Well they have perms now...
+        if (user == null) {
+            user = PlayerController.handleLogin(player);
+        }
 
         if (user == null || user.isLoggedIn()) {
             return;
@@ -105,7 +148,16 @@ public class PlayerListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onSecureChat(AsyncPlayerChatEvent e) {
-        StaffSecureUser user = plugin.users.get(e.getPlayer().getUniqueId().toString());
+        Player player = e.getPlayer();
+        if (!player.hasPermission("staffsecure.staff")) {
+            return;
+        }
+
+        StaffSecureUser user = plugin.users.get(player.getUniqueId().toString());
+        //Well they have perms now...
+        if (user == null) {
+            user = PlayerController.handleLogin(player);
+        }
 
         if (user == null || user.isLoggedIn()) {
             return;
