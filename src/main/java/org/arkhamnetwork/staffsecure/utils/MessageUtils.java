@@ -13,8 +13,8 @@ import org.bukkit.ChatColor;
  */
 public class MessageUtils {
 
-    public static String translateToColorCode(String msg) {
-        return ChatColor.translateAlternateColorCodes('&', msg);
-    }
+      public static String translateToColorCode(String msg) {
+            return ChatColor.translateAlternateColorCodes('&', msg);
+      }
 
 }

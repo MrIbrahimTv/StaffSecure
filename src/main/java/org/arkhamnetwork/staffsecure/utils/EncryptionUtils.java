@@ -15,15 +15,14 @@ import java.security.NoSuchAlgorithmException;
  */
 public class EncryptionUtils {
 
-    public static String getMD5(String value) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(value.getBytes(), 0, value.length());
-            return new BigInteger(1, md.digest()).toString(16);
-        } catch (NoSuchAlgorithmException e) {
-        }
-        return value;
-    }
+      public static String getMD5(String value) {
+            try {
+                  MessageDigest md = MessageDigest.getInstance("MD5");
+                  md.update(value.getBytes(), 0, value.length());
+                  return new BigInteger(1, md.digest()).toString(16);
+            } catch (NoSuchAlgorithmException e) {
+            }
+            return value;
+      }
 
-    
 }
