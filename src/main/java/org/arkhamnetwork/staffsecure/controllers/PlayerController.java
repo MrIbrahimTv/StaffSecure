@@ -51,19 +51,20 @@ public class PlayerController {
             if (!plugin.configuration.isForceLoginOnRelog() && !plugin.configuration.isForceLoginOnRelogIfIpChange()) {
                   return null;
             }
+            boolean requiresLogin = !player.getAddress().toString().split(":")[0].replace("/", "").equals(previousIp)
+                                    || player.hasPermission("staffsecure.forceloginrequired");
 
-            boolean hasIpChanged = !player.getAddress().toString().split(":")[0].replace("/", "").equals(previousIp);
-            if (hasIpChanged) {
+            if (requiresLogin) {
                   player.sendMessage(plugin.configuration.getMessagePrefix() + ChatColor.YELLOW + " Your IP has changed since the last time you logged in. We have logged you out.");
                   plugin.users.get(player.getUniqueId().toString()).getConfig().setLoggedInToLastIP(false);
             }
 
-            if (!hasIpChanged && !plugin.configuration.isForceLoginOnRelog() && plugin.configuration.isForceLoginOnRelogIfIpChange() && plugin.users.get(player.getUniqueId().toString()).getConfig().isLoggedIntoLastLoggedIp()) {
+            if (!requiresLogin && !plugin.configuration.isForceLoginOnRelog() && plugin.configuration.isForceLoginOnRelogIfIpChange() && plugin.users.get(player.getUniqueId().toString()).getConfig().isLoggedIntoLastLoggedIp()) {
                   plugin.users.get(player.getUniqueId().toString()).setLoggedIn(true);
                   return null;
             }
 
-            if (plugin.configuration.isForceLoginOnRelog() || (plugin.configuration.isForceLoginOnRelogIfIpChange() && hasIpChanged)) {
+            if (plugin.configuration.isForceLoginOnRelog() || (plugin.configuration.isForceLoginOnRelogIfIpChange() && requiresLogin)) {
                   plugin.users.get(player.getUniqueId().toString()).setLoggedIn(false);
                   if (plugin.users.get(player.getUniqueId().toString()).getConfig().getEncryptedPassword() != null) {
                         player.sendMessage(plugin.configuration.getMessagePrefix() + ChatColor.RED + " You need to login! /login <password>");
